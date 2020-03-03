@@ -11,8 +11,6 @@
     <result column="proAddress" jdbcType="VARCHAR" property="proaddress" />
     <result column="proFax" jdbcType="VARCHAR" property="profax" />
     <result column="createdBy" jdbcType="BIGINT" property="createdby" />
-
-
     <result column="creationDate" jdbcType="TIMESTAMP" property="creationdate" />
     <result column="modifyDate" jdbcType="TIMESTAMP" property="modifydate" />
     <result column="modifyBy" jdbcType="BIGINT" property="modifyby" />

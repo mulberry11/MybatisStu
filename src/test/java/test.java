@@ -35,6 +35,7 @@ public class test {
     }
     @After
     public void close(){
+        session.commit();
         session.close();
         try {
             in.close();

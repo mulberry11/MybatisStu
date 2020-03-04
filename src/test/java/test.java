@@ -1,6 +1,5 @@
-import dao.SmbmsProviderDao;
-import entity.QueryVo;
-import entity.SmbmsProvider;
+import dao.*;
+import entity.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -21,13 +20,21 @@ public class test {
     private SqlSession session;
     private InputStream in;
     private SmbmsProviderDao smbmsProviderDao;
+    private SmbmsAddressDao addressDao;
+    private SmbmsBillDao billDao;
+    private SmbmsRoleDao roleDao;
+    private SmbmsUserDao userDao;
     @Before
     public void init()  {
         try {
             in = Resources.getResourceAsStream("mybatis.xml");
             SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(in);
-            session = factory.openSession();
+            session = factory.openSession(true);
             smbmsProviderDao= session.getMapper(SmbmsProviderDao.class);
+            addressDao= session.getMapper(SmbmsAddressDao.class);
+            billDao= session.getMapper(SmbmsBillDao.class);
+            roleDao= session.getMapper(SmbmsRoleDao.class);
+            userDao= session.getMapper(SmbmsUserDao.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,7 +42,6 @@ public class test {
     }
     @After
     public void close(){
-        session.commit();
         session.close();
         try {
             in.close();
@@ -44,22 +50,19 @@ public class test {
         }
     }
     @Test
-    public void testFindAll() throws Exception{
-        List<SmbmsProvider> all = smbmsProviderDao.findAll();
-        for (SmbmsProvider smbms :
-                all) {
-            System.out.println(smbms);
-        }
+    public void test() throws Exception{
+        SmbmsUser smbmsUser = userDao.selectByPrimaryKey(1L);
+        System.out.println(smbmsUser);
     }
     @Test
-    public void testVo(){
-        QueryVo vo = new QueryVo();
-        SmbmsProvider smbmsProvider = new SmbmsProvider();
-        smbmsProvider.setProname("%市%");
-        vo.setProvider(smbmsProvider);
-        List<SmbmsProvider> userByVo = smbmsProviderDao.findUserByVo(vo);
-        for (SmbmsProvider smbms:userByVo) {
-            System.out.println(smbms);
+    public void billTest(){
+        SmbmsBill smbmsBill = new SmbmsBill();
+        smbmsBill.setProductname("大");
+        List<SmbmsBill> smbmsBills = billDao.OrderList(smbmsBill);
+        for (SmbmsBill bill :
+                smbmsBills) {
+            System.out.println(bill);
         }
     }
+
 }

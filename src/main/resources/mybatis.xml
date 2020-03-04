@@ -4,6 +4,9 @@
         "http://Mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <properties resource="mybatis.properties"/>
+    <typeAliases>
+        <package name="entity"/>
+    </typeAliases>
     <environments default="mysql">
         <environment id="mysql">
             <transactionManager type="JDBC"></transactionManager>
@@ -17,5 +20,9 @@
     </environments>
     <mappers>
         <mapper resource="mapper/SmbmsProviderDao.xml"/>
+        <mapper resource="mapper/SmbmsAddressDao.xml"/>
+        <mapper resource="mapper/SmbmsBillDao.xml"/>
+        <mapper resource="mapper/SmbmsRoleDao.xml"/>
+        <mapper resource="mapper/SmbmsUserDao.xml"/>
     </mappers>
 </configuration>
